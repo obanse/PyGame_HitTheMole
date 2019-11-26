@@ -150,8 +150,8 @@ def display_highscore():
         msg_display('Highscore', screen_width/2, screen_height/5, 100)
 
         for y, (hi_name, hi_score) in enumerate(highscores):
-            TextSurf, TextRect = text_objects(f'{hi_name} {hi_score}', font, blue)
-            TextRect.left, TextRect.top = ((350, y * 30 + 200))
+            TextSurf, TextRect = text_objects(f'{hi_name} - {hi_score} Pkt.', font, blue)
+            TextRect.left, TextRect.top = ((330, y * 30 + 200))
             screen.blit(TextSurf, TextRect)
 
         for event in pygame.event.get():
