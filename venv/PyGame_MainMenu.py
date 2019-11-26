@@ -16,7 +16,6 @@ __author__ = 'Oliver Banse'
 # IDEA
 # Import and Initialization
 import json
-import pygame_textinput
 import random
 import time
 from operator import itemgetter
@@ -144,7 +143,6 @@ def add_highscore(count_hits):
 def display_highscore():
     font = pygame.font.Font('freesansbold.ttf', 20)
     highscores = load_highscore()
-    textinput = pygame_textinput.TextInput()
 
     while True:
         screen.fill(white)
