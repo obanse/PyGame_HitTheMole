@@ -3,18 +3,17 @@
 
 __author__ = 'Oliver Banse'
 
-import time
-
-import Colors
 import pygame
-from Highscore import Highscore
-from Mole import Mole
-from Shovel import Shovel
 from pygame.locals import *
 from pygame.sprite import Group
 
+from classes import Colors
+from classes.Highscore import Highscore
+from classes.Mole import Mole
+from classes.Shovel import Shovel
 
-class Game():
+
+class Game:
     def __init__(self, screen):
         self.screen = screen
         self.screen.set_game(self)
@@ -42,7 +41,6 @@ class Game():
         self.count_fails = 0
         self.highscore = Highscore(self.screen)
         self.player = ''
-
 
     def game_quit(self):
         self.highscore.save_highscore()
@@ -81,14 +79,14 @@ class Game():
                                     self.screen.width / 2,
                                     self.screen.height / 2,
                                     40, Colors.blue)
-            self.screen.button('To Mainmenu',
+            self.screen.button('Go To Main',
                                self.screen.width / 2 - 90,
                                520,
                                180,
                                40,
                                Colors.blue, Colors.bright_blue,
                                Colors.white,
-                               self.game_new)
+                               self.game_menu)
 
             # Redisplay
             self.screen.flip()
@@ -160,12 +158,15 @@ class Game():
         # Loop
         while self.pause:
             # Timer
-            clock.tick(30)
+            self.clock.tick(30)
 
             # Event handling
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    game_quit()
+                if event.type == QUIT:
+                    self.game_quit()
+                elif event.type == KEYDOWN:
+                    if event.key == K_ESCAPE or event.key == K_p:
+                        self.pause = False
 
             self.screen.msg_display('PAUSED',
                                     self.screen.width / 2,
@@ -179,7 +180,7 @@ class Game():
                                self.game_continue)
 
             # Redisplay
-            screen.flip()
+            self.screen.flip()
 
     # Action --> ALTER
     def game_menu(self):
@@ -187,7 +188,7 @@ class Game():
 
         # Assign variables
         bg = pygame.image.load('images/grass_field.jpg')
-        bg = pygame.transform.scale(bg, (self.screen.size))
+        bg = pygame.transform.scale(bg, self.screen.size)
         button_width = 200
         button_height = 50
         menu_y_start = 200
@@ -205,7 +206,7 @@ class Game():
                     menu_isshown = False
                 elif event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
-                        menu_isshown = False
+                        self.game_quit()
 
             # screen.fill(white)
             self.screen.blit(bg, (0, 0))
@@ -216,49 +217,49 @@ class Game():
                                     100)
 
             self.screen.button('New Game',
-                          self.screen.width / 2 - button_width / 2,  # x-Pos
-                          menu_y_start,                              # y-Pos
-                          button_width,
-                          button_height,
-                          Colors.green,             # inactive Color
-                          Colors.bright_green,      # active Color
-                          Colors.black,             # Text-Color
-                          self.game_loop            # action when clicked
-                          )
+                               self.screen.width / 2 - button_width / 2,  # x-Pos
+                               menu_y_start,  # y-Pos
+                               button_width,
+                               button_height,
+                               Colors.green,  # inactive Color
+                               Colors.bright_green,  # active Color
+                               Colors.black,  # Text-Color
+                               self.game_new  # action when clicked
+                               )
             self.screen.button('Highscore',
-                          self.screen.width / 2 - button_width / 2,
-                          menu_y_start + button_height + menu_y_gap,
-                          button_width,
-                          button_height,
-                          Colors.blue, Colors.bright_blue,
-                          Colors.white,
-                          self.highscore.display_highscore
-                          )
+                               self.screen.width / 2 - button_width / 2,
+                               menu_y_start + button_height + menu_y_gap,
+                               button_width,
+                               button_height,
+                               Colors.blue, Colors.bright_blue,
+                               Colors.white,
+                               self.highscore.display_highscore
+                               )
             self.screen.button('Options',
-                          self.screen.width / 2 - button_width / 2,
-                          menu_y_start + button_height * 2 + menu_y_gap * 2,
-                          button_width,
-                          button_height,
-                          Colors.orange, Colors.bright_orange,
-                          Colors.white
-                          )
+                               self.screen.width / 2 - button_width / 2,
+                               menu_y_start + button_height * 2 + menu_y_gap * 2,
+                               button_width,
+                               button_height,
+                               Colors.orange, Colors.bright_orange,
+                               Colors.white
+                               )
             self.screen.button('Help',
-                          self.screen.width / 2 - button_width / 2,
-                          menu_y_start + button_height * 3 + menu_y_gap * 3,
-                          button_width,
-                          button_height,
-                          Colors.violett, Colors.bright_violett,
-                          Colors.white
-                          )
+                               self.screen.width / 2 - button_width / 2,
+                               menu_y_start + button_height * 3 + menu_y_gap * 3,
+                               button_width,
+                               button_height,
+                               Colors.violett, Colors.bright_violett,
+                               Colors.white
+                               )
             self.screen.button('Quit Game',
-                          self.screen.width / 2 - button_width / 2,
-                          menu_y_start + button_height * 4 + menu_y_gap * 4,
-                          button_width,
-                          button_height,
-                          Colors.red, Colors.bright_red,
-                          Colors.white,
-                          self.game_quit
-                          )
+                               self.screen.width / 2 - button_width / 2,
+                               menu_y_start + button_height * 4 + menu_y_gap * 4,
+                               button_width,
+                               button_height,
+                               Colors.red, Colors.bright_red,
+                               Colors.white,
+                               self.game_quit
+                               )
 
             # Redisplay
             self.screen.flip()
@@ -271,7 +272,6 @@ class Game():
         sprite_group = Group()
         sprite_group.add(self.mole)
         sprite_group.add(self.shovel)
-        font = pygame.font.Font(None, 25)
 
         self.count_hits = 0
         self.count_fails = 0
@@ -314,9 +314,9 @@ class Game():
                                              15, self.screen.height - 45,
                                              18, Colors.white)
                     self.screen.msg_hud_left(u'Maulfwürfe gefangen: ' +
-                                        str(self.count_hits),
-                                        15, self.screen.height - 15,
-                                        18, Colors.white)
+                                             str(self.count_hits),
+                                             15, self.screen.height - 15,
+                                             18, Colors.white)
                     break
                 elif event.type == KEYDOWN:
                     if event.key == K_p:
@@ -328,6 +328,10 @@ class Game():
                             self.music.stop()
                         else:
                             self.music.play(-1)
+                    if event.key == K_ESCAPE:
+                        running = False
+                        self.music.stop()
+                        self.game_menu()
 
             # Redisplay
             self.screen.flip()
@@ -343,4 +347,4 @@ class Game():
         self.count_hits = 0
         self.count_fails = 0
 
-        self.start()
+        self.game_loop()

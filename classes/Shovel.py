@@ -6,6 +6,7 @@ __author__ = 'Oliver Banse'
 import pygame
 from pygame.sprite import Sprite
 
+
 class Shovel(Sprite):
     def __init__(self):
         Sprite.__init__(self)

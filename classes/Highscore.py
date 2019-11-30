@@ -3,21 +3,15 @@
 
 __author__ = 'Oliver Banse'
 
-import pygame
-import Colors
 import json
-from pygame.locals import *
 from operator import itemgetter
 
+from classes import Colors
+import pygame
+from pygame.locals import *
 
 
-# TODO: Highscore umstruckturieren! TextInput
-# --> check_highscore() --> if highscore then
-# --> get_player_name() --> return name
-# --> add_highscore(name, num_hits)
-# --> on_quit --> save_highscore()
-
-class Highscore():
+class Highscore:
     def __init__(self, screen):
         self.screen = screen
         self.highscore = self.load_highscore()
@@ -58,18 +52,18 @@ class Highscore():
         self.highscore = self.load_highscore()
 
         while True:
-            self.screen.fill((255,255,255))
+            self.screen.fill((255, 255, 255))
             # Display the high-scores.
             self.screen.msg_display('Highscore',
-                                    self.screen.width/2,
-                                    self.screen.height/5,
+                                    self.screen.width / 2,
+                                    self.screen.height / 5,
                                     100)
 
             for y, (hi_name, hi_score) in enumerate(self.highscore):
-                TextSurf, TextRect = self.screen.text_objects(
+                text_surf, text_rect = self.screen.text_objects(
                     f'{hi_name} - {hi_score} Pkt.', font, Colors.blue)
-                TextRect.left, TextRect.top = ((330, y * 30 + 200))
-                self.screen.blit(TextSurf, TextRect)
+                text_rect.left, text_rect.top = (330, y * 30 + 200)
+                self.screen.blit(text_surf, text_rect)
 
             for event in pygame.event.get():
                 if event.type == QUIT:

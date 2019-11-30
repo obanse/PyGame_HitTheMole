@@ -3,8 +3,9 @@
 
 __author__ = 'Oliver Banse'
 
-import pygame
 import random
+
+import pygame
 from pygame.sprite import Sprite
 
 
@@ -16,7 +17,7 @@ class Mole(Sprite):
         self.height = 96
         self.image = pygame.image.load('images/mole.png')
         self.image = pygame.transform.scale(self.image,
-                                    (self.width, self.height))
+                                            (self.width, self.height))
         self.rect = self.image.get_rect()
         self.sound = pygame.mixer.Sound('sounds/mole_ow.wav')
         self.screen_width = screen_width
