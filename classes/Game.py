@@ -116,11 +116,7 @@ class Game:
                                     self.screen.height / 2,
                                     40, Colors.blue)
             # add button to go back to main menu
-            self.screen.button('Go To Main',
-                               self.screen.width / 2 - 90,
-                               520,
-                               180,
-                               40,
+            self.screen.button('Go To Main', 580, 520, 180, 40,
                                Colors.blue, Colors.bright_blue,
                                Colors.white,
                                self.show_mainmenu)
