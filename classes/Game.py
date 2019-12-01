@@ -300,7 +300,13 @@ class Game:
 
     # toggle sounds to mute / unmute
     def toogle_muted(self):
-        self.muted = not self.muted
+        if self.muted:
+            self.muted = False
+            print("Sounds unmuted!")
+        else:
+            self.muted = True
+            print("Sounds muted!")
+
 
     # exit options menu
     def exit_options(self):
@@ -405,7 +411,8 @@ class Game:
     # unpause the game and go on
     def game_continue(self):
         self.pause = False
-        self.music.play(-1)
+        if not self.muted:
+            self.music.play(-1)
 
     # show main menu
     def show_mainmenu(self):
@@ -510,7 +517,8 @@ class Game:
         self.points = 0
         self.count_fails = 0
         # start endless playing game music
-        self.music.play(-1)
+        if not self.muted:
+            self.music.play(-1)
 
         # Loop
         running = True
@@ -558,7 +566,7 @@ class Game:
                         self.pause = True
                         self.game_pause()
                     if event.key == K_m:
-                        self.muted = not self.muted
+                        self.toogle_muted()
                         if self.muted:
                             self.music.stop()
                         else:
@@ -579,7 +587,6 @@ class Game:
     def game_new(self):
         self.isfinished = False
         self.pause = False
-        self.muted = False
 
         self.points = 0
         self.count_fails = 0
