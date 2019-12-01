@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
-
+"""
+Colors: will be used by the game
+"""
 __author__ = 'Oliver Banse'
 
 # -> define some colors
